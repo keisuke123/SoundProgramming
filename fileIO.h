@@ -54,7 +54,14 @@ void read_wave_mono(PCM *pcm, char *file_name){
 
   /* FMT Chunk*/
   fread(data.fc.chunk_id, 1, 4, fp);
-  
+  fread(&data.fc.chunk_size, 4, 1, fp);
+  fread(&data.fc.format_type, 2, 1, fp);
+  fread(&data.fc.channel, 2, 1, fp);
+  fread(&data.fc.sample_per_sec, 4, 1, fp);
+  fread(&data.fc.bytes_per_sec, 4, 1, fp);
+  fread(&data.fc.block_size, 2, 1, fp);
+  fread(&data.fc.bits_per_sample, 2, 1, fp);
+
   
   fclose(fp);
 }
