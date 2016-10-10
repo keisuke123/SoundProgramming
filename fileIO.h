@@ -3,6 +3,7 @@
 #define fileIO_H
 
 // header file
+#include <stdio.h>
 
 typedef struct {
   int fs; //標本化周波数
@@ -12,22 +13,52 @@ typedef struct {
 } PCM;
 
 typedef struct {
-  char chunk_ID[4];
-  long size;
+  char chunk_id[4];
+  long chunk_size;
   char format_type[4];
-}RIFF;
+}RIFF_CHUNK;
 
 typedef struct {
-  char chunk_ID[4];
+  char chunk_id[4];
   long chunk_size;
   short format_type;
   short channel;
+  long sample_per_sec;
+  long bytes_per_sec;
+  short block_size;
+  short bits_per_sample;
+}FMT_CHUNK;
 
-}FMT;
+typedef struct {
+  char chunk_id[4];
+  long chunk_size[4];
+  short data;
+}DATA_CHUNK;
 
-void read_wav_mono(PCM *pcm, char *file_name){
+typedef struct {
+  RIFF_CHUNK rc;
+  FMT_CHUNK fc;
+  DATA_CHUNK dc;
+}WAVE;
+
+void read_wave_mono(PCM *pcm, char *file_name){
+  FILE *fp;
+  WAVE data;
   
+  fp = fopen(file_name, "rb");
+
+  /* Riff Chunk */
+  fread(data.rc.chunk_id, 1, 4, fp);
+  fread(&data.rc.chunk_size, 4, 1, fp);
+  fread(data.rc.format_type, 1, 4, fp);
+
+  /* FMT Chunk*/
+  fread(data.fc.chunk_id, 1, 4, fp);
+  
+  
+  fclose(fp);
 }
 
 
 #endif
+
