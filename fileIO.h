@@ -4,6 +4,7 @@
 
 // header file
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct {
   int fs; //標本化周波数
@@ -31,7 +32,7 @@ typedef struct {
 
 typedef struct {
   char chunk_id[4];
-  long chunk_size[4];
+  long chunk_size;
   short data;
 }DATA_CHUNK;
 
@@ -44,7 +45,7 @@ typedef struct {
 void read_wave_mono(PCM *pcm, char *file_name){
   FILE *fp;
   WAVE data;
-  
+  double d;
   fp = fopen(file_name, "rb");
 
   /* Riff Chunk */
@@ -66,6 +67,17 @@ void read_wave_mono(PCM *pcm, char *file_name){
   fread(data.dc.chunk_id, 1, 4, fp);
   fread(&data.dc.chunk_size, 4, 1, fp);
   
+  pcm->fs = data.fc.sample_per_sec;
+  pcm->bit = data.fc.bits_per_sample;
+  pcm->len = data.dc.chunk_size;
+  pcm->s = (double *)calloc(pcm->len, sizeof(double));
+  
+  int i;
+  for(i = 0 ; i < pcm->len ; i++){
+    fread(&d, 2, 1, fp);
+    pcm->s[i] = (double)d/(32768.0);
+  }
+
   fclose(fp);
 }
 
