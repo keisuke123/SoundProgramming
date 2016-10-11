@@ -2,10 +2,6 @@
 #ifndef fileIO_H
 #define fileIO_H
 
-// header file
-//#include <stdio.h>
-//#include <stdlib.h>
-
 typedef struct {
   int fs; //標本化周波数
   int bit;
@@ -48,7 +44,7 @@ void read_wave_mono(PCM *pcm, char *file_name);
 void read_wave_mono(PCM *pcm, char *file_name){
   FILE *fp;
   WAVE data;
-  double d;
+  short d;
   fp = fopen(file_name, "rb");
 
   /* Riff Chunk */
@@ -79,6 +75,7 @@ void read_wave_mono(PCM *pcm, char *file_name){
   for(i = 0 ; i < pcm->len ; i++){
     fread(&d, 2, 1, fp);
     pcm->s[i] = (double)d/(32768.0);
+
   }
 
   fclose(fp);
@@ -87,18 +84,18 @@ void read_wave_mono(PCM *pcm, char *file_name){
 void write_wave_mono(PCM *pcm, char *file_name){
   FILE *fp;
   WAVE data;
-  double d;
+  short d;
 
   /* Riff Chunk */
   data.rc.chunk_id[0] = 'R';
   data.rc.chunk_id[1] = 'I';
   data.rc.chunk_id[2] = 'F';
   data.rc.chunk_id[3] = 'F';
-  data.rc.chunk_size = 36 + pcm->len * 2;
+  data.rc.chunk_size = 36 + pcm->len;
   data.rc.format_type[0] = 'W';
-  data.rc.format_type[0] = 'A';
-  data.rc.format_type[0] = 'V';
-  data.rc.format_type[0] = 'E';
+  data.rc.format_type[1] = 'A';
+  data.rc.format_type[2] = 'V';
+  data.rc.format_type[3] = 'E';
 
   /* FMT Chunk*/
   data.fc.chunk_id[0] = 'f';
@@ -109,21 +106,16 @@ void write_wave_mono(PCM *pcm, char *file_name){
   data.fc.format_type = 1;
   data.fc.channel = 1;
   data.fc.sample_per_sec = pcm->fs;
-  data.fc.bytes_per_sec = pcm->fs * pcm->bit/8;
-  data.fc.block_size = pcm->bit / 8;
-  data.fc.bits_per_sample = pcm->bit;
-
-  /*
   data.fc.bits_per_sample = pcm->bit;
   data.fc.block_size = data.fc.bits_per_sample * data.fc.channel / 8;
   data.fc.bytes_per_sec = pcm->fs * data.fc.block_size;
-  */
+  
 
   /* Data Chunk**/
   data.dc.chunk_id[0] = 'd';
-  data.dc.chunk_id[0] = 'a';
-  data.dc.chunk_id[0] = 't';
-  data.dc.chunk_id[0] = 'a';
+  data.dc.chunk_id[1] = 'a';
+  data.dc.chunk_id[2] = 't';
+  data.dc.chunk_id[3] = 'a';
   data.dc.chunk_size = pcm->len * data.fc.channel;
   
   fp = fopen(file_name, "wb");
@@ -148,9 +140,10 @@ void write_wave_mono(PCM *pcm, char *file_name){
   /* Data Chunk*/
   fwrite(data.dc.chunk_id, 1, 4, fp);
   fwrite(&data.dc.chunk_size, 4, 1, fp);
-
   
   int i;
+
+  //printf("len=%d\n", pcm->len);
   for(i = 0 ; i < pcm->len ; i++){
     double s = (pcm->s[i] + 1.0) / 2.0 * 65536.0;
     
@@ -163,8 +156,10 @@ void write_wave_mono(PCM *pcm, char *file_name){
       s = 0.0; /* クリッピング */
     }
     
-    short data = (short)((int)(s + 0.5) - 32768); /* 四捨五入とオフセットの調節 */
-    fwrite(&data, 2, 1, fp); /* 音データの書き出し */
+    d = (short)((int)(s + 0.5) - 32768); /* 四捨五入とオフセットの調節 */
+    //printf("%d\n", d);
+
+    fwrite(&d, 2, 1, fp); /* 音データの書き出し */
   }
 
   fclose(fp);
