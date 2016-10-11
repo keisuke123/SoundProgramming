@@ -102,25 +102,20 @@ void write_wave_mono(PCM *pcm, char *file_name){
   fwrite(data.dc.chunk_id, 1, 4, fp);
   fwrite(&data.dc.chunk_size, 4, 1, fp);
   
+  /* sound data*/
   int i;
-
-  //printf("len=%d\n", pcm->len);
   for(i = 0 ; i < pcm->len ; i++){
-    double s = (pcm->s[i] + 1.0) / 2.0 * 65536.0;
+    double s = (pcm->s[i] + 1.0) * 32768.0;
     
-    if (s > 65535.0)
-    {
-      s = 65535.0; /* クリッピング */
-    }
-    else if (s < 0.0)
-    {
-      s = 0.0; /* クリッピング */
+    if (s > 65535.0){
+      s = 65535.0; 
+    } else if (s < 0.0) {
+      s = 0.0; 
     }
     
-    d = (short)((int)(s + 0.5) - 32768); /* 四捨五入とオフセットの調節 */
-    //printf("%d\n", d);
+    d = (short)((int)(s + 0.5) - 32768);
 
-    fwrite(&d, 2, 1, fp); /* 音データの書き出し */
+    fwrite(&d, 2, 1, fp);
   }
 
   fclose(fp);
