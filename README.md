@@ -1,2 +1,2 @@
 # SoundProgramming
-Sound programming written by c.
+Sound program written by c.
