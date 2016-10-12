@@ -8,6 +8,7 @@ void read_wave_mono(PCM *pcm, char *file_name){
   short d;
   fp = fopen(file_name, "rb");
 
+  /* 読み込み */
   /* Riff Chunk */
   fread(data.rc.chunk_id, 1, 4, fp);
   fread(&data.rc.chunk_size, 4, 1, fp);
@@ -29,7 +30,7 @@ void read_wave_mono(PCM *pcm, char *file_name){
   
   pcm->fs = data.fc.sample_per_sec;
   pcm->bit = data.fc.bits_per_sample;
-  pcm->len = data.dc.chunk_size;
+  pcm->len = data.dc.chunk_size / 2;
   pcm->s = (double *)calloc(pcm->len, sizeof(double));
   
   int i;
@@ -47,12 +48,13 @@ void write_wave_mono(PCM *pcm, char *file_name){
   WAVE data;
   short d;
 
+  /* データを構造体に格納 */
   /* Riff Chunk */
   data.rc.chunk_id[0] = 'R';
   data.rc.chunk_id[1] = 'I';
   data.rc.chunk_id[2] = 'F';
   data.rc.chunk_id[3] = 'F';
-  data.rc.chunk_size = 36 + pcm->len;
+  data.rc.chunk_size = 36 + pcm->len * 2;
   data.rc.format_type[0] = 'W';
   data.rc.format_type[1] = 'A';
   data.rc.format_type[2] = 'V';
@@ -77,7 +79,7 @@ void write_wave_mono(PCM *pcm, char *file_name){
   data.dc.chunk_id[1] = 'a';
   data.dc.chunk_id[2] = 't';
   data.dc.chunk_id[3] = 'a';
-  data.dc.chunk_size = pcm->len * data.fc.channel;
+  data.dc.chunk_size = pcm->len * data.fc.channel * 2;
   
   fp = fopen(file_name, "wb");
 
@@ -104,15 +106,15 @@ void write_wave_mono(PCM *pcm, char *file_name){
   
   /* sound data*/
   int i;
+  printf("len=%d\n", pcm->len);
   for(i = 0 ; i < pcm->len ; i++){
     double s = (pcm->s[i] + 1.0) * 32768.0;
     
     if (s > 65535.0){
-      s = 65535.0; 
+      s = 65535.0;
     } else if (s < 0.0) {
-      s = 0.0; 
+      s = 0.0;
     }
-    
     d = (short)((int)(s + 0.5) - 32768);
 
     fwrite(&d, 2, 1, fp);
