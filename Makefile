@@ -1,20 +1,19 @@
-OBJS = compose_sin_curve.o fileIO.o waves.o
+OBJS = compose_sin_curve.o waves.o fileIO.o
+CFLAGS = -Wall -O2 -lm
 
 all: $(OBJS)
-	gcc -Wall -O2 $(OBJS)
+	gcc $^
 
 compose_sin_curve.o: compose_sin_curve.c
-    gcc -c compose_sin_curve.c
+	gcc -c compose_sin_curve.c
 
-fileIO.o: fileIO.c
-	gcc -c fileIO.c
+waves.o: header/waves.c
+	gcc $(CFLAGS) -c header/waves.c
 
-waves.o: waves.c
-	gcc -c waves.c
+fileIO.o: header/fileIO.c
+	gcc $(CGLAGS) -c header/fileIO.c
 
 .PHONY: clean
 
 clean: 
 	rm -f ./a.out $(OBJS)
-
-
