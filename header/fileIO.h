@@ -2,11 +2,14 @@
 #ifndef fileIO_H
 #define fileIO_H
 
+// WAVEのフォーマットについては以下のURL参照
+// https://goo.gl/72sPnr
+
 typedef struct {
-  int fs; //標本化周波数
-  int bit;
-  int len;
-  double *s;
+  int fs;       // 標本化周波数
+  int bit;      // 量子化ビット数
+  int len;      // データの長さ
+  double *s;    // 音源格納用
 } PCM;
 
 typedef struct {
