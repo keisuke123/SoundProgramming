@@ -8,12 +8,17 @@
 * sawtooth_curve(のこぎり波)
 
 の関数を呼び出すことで,その波形を作り出すことができます.
-使用するにはheader/waves.hをインクルードしてください.
 
-関数の基本形は以下の通りです。
+### 関数の仕様
+これらの関数群を使用するにはheader/waves.hをインクルードしてください.
+
+関数の仕様は以下の通りです。
 
 ```c
-void function(PCM *pcm, double gain, double f0)
+void sin_curve(PCM *pcm, double gain, double f0);
+void square_curve(PCM *pcm, double gain, double f0);
+void triangle_curve(PCM *pcm, double gain, double f0);
+void sawtooth_curve(PCM *pcm, double gain, double f0);
 ```
 
 * pcmにはサンプリング周波数等を格納したPCM型のファイル
@@ -31,6 +36,8 @@ typedef struct {
   double *s;    // 音源データ格納用
 } PCM;
 ```
+
+### 使用例
 以下にプログラム例を示します.
 
 ```c
