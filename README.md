@@ -13,6 +13,7 @@ void function(PCM *pcm, double gain, double f0)
 * pcmにはサンプリング周波数等を格納したPCM型のファイル
 * gainは振幅調整
 * f0には基本周波数
+
 を格納してください。
 PCM型のパラメータは以下のとおりです.
 ```c
