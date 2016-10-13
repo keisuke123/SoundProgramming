@@ -22,7 +22,7 @@ int main(){
   pcm.len = pcm.fs * 1;
   pcm.s = (double *)calloc(pcm.len, sizeof(double));
 
-  for (int n = 0; n < pcm.len; ++n) {
+  for (n = 0; n < pcm.len; ++n) {
     pcm.s[n] = A * sin(2 * M_PI * F0 * n / pcm.fs);
   }
 
