@@ -8,7 +8,7 @@ Sound program written by c.
 
 関数の基本形は以下の通り
 ```c
-void function(&pcm, gain, f0)
+void function(PCM *pcm, double gain, double f0)
 ```
 * pcmにはサンプリング周波数等を格納したPCM型のファイル
 * gainは振幅調整
