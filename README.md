@@ -6,7 +6,9 @@ Sound program written by c.
 * triangle_curve(三角波)
 * sawtooth_curve(のこぎり波)
 
-関数の基本形は以下の通り
+の関数を呼び出すことができます。header/waves.hをインクルードしてください。
+
+関数の基本形は以下の通りです。
 ```c
 void function(PCM *pcm, double gain, double f0)
 ```
