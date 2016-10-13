@@ -1,5 +1,7 @@
 # SoundProgramming
 
+16bit, モノラルの音声信号を扱うC言語のコードです.
+このコードでは
 * sin_curve(サイン波)
 * square_curve(矩形波)
 * triangle_curve(三角波)
