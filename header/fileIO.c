@@ -24,7 +24,7 @@ void read_wave_mono(PCM *pcm, char *file_name){
   fread(&data.fc.block_size, 2, 1, fp);
   fread(&data.fc.bits_per_sample, 2, 1, fp);
 
-  /* Data Chunk*/
+  /* Data Chunk */
   fread(data.dc.chunk_id, 1, 4, fp);
   fread(&data.dc.chunk_size, 4, 1, fp);
   
