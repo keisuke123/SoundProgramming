@@ -5,6 +5,8 @@
 #ifndef SOUNDPROGRAMMING_WAVES_H
 #define SOUNDPROGRAMMING_WAVES_H
 
+#include "fileIO.h"
+
 void sin_curve(PCM *pcm, double gain, double f0);
 void square_curve(PCM *pcm, double gain, double f0);
 void triangle_curve(PCM *pcm, double gain, double f0);
