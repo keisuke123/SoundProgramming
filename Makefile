@@ -1,13 +1,16 @@
-OBJS = fileIO.o forfileIO.o
+OBJS = compose_sin_curve.o fileIO.o waves.o
 
 all: $(OBJS)
 	gcc -Wall -O2 $(OBJS)
 
+compose_sin_curve.o: compose_sin_curve.c
+    gcc -c compose_sin_curve.c
+
 fileIO.o: fileIO.c
 	gcc -c fileIO.c
 
-forfileIO.o: forfileIO.c
-	gcc -c forfileIO.c
+waves.o: waves.c
+	gcc -c waves.c
 
 .PHONY: clean
 
