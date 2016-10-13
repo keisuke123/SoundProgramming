@@ -19,5 +19,6 @@ int main(){
 
   write_wave_mono(&pcm, "sin.wav");
 
+  free(pcm.s);
   return 0;
 }
