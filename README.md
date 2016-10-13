@@ -14,3 +14,12 @@ void function(PCM *pcm, double gain, double f0)
 * gainは振幅調整
 * f0には基本周波数
 を格納してください。
+PCM型のパラメータは以下のとおりです.
+```c
+typedef struct {
+  int fs;       // 標本化周波数
+  int bit;      // 量子化ビット数
+  int len;      // データの長さ
+  double *s;    // 音源格納用
+} PCM;
+```
