@@ -1,4 +1,4 @@
-## waveファイルの仕様
+# waveファイルの仕様
 waveファイルは以下のような仕様になっています.
 ![Markdown](./RIFF WAVE file format.jpg "Markdown")
 WAVEファイルは3つのチャンクから構成されています.
