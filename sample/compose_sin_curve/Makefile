@@ -1,11 +1,11 @@
-OBJS = compose_sin_curve.o waves.o fileIO.o
+OBJS = compose_sin_wave.o waves.o fileIO.o
 CFLAGS = -Wall -O2 -lm
 
 all: $(OBJS)
 	gcc $^
 
-compose_sin_curve.o: compose_sin_curve.c
-	gcc -c compose_sin_curve.c
+compose_sin_curve.o: compose_sin_wave.c
+	gcc -c compose_sin_wave.c
 
 waves.o: ../../header/waves.c
 	gcc $(CFLAGS) -c ../../header/waves.c
