@@ -4,7 +4,7 @@ waveファイルは以下のような仕様になっています.
 WAVEファイルは3つのチャンクから構成されています.
 ()内に書かれているのは、実際の構造体メンバ名です. 
 
-#### RIFFチャンク
+### RIFFチャンク
 RIFFチャンクは以下3つの要素で構成されています.
 * Chunk ID (data.rc.chunk_id)  
 "RIFF"という4文字が入っています.
@@ -15,7 +15,7 @@ RIFFチャンクは以下3つの要素で構成されています.
 * Format (data.rc.format_type)  
 "WAVE"という4文字が入ります.
 
-#### FMTチャンク
+### FMTチャンク
 * SubChunk1ID (data.fc.chunk_id)  
 "fmt "という4文字（最後に半角空白）が入ります.
 
@@ -43,7 +43,7 @@ Bits Per-Sample * Channel Number / 8;
 * Bits Per-Sample (data.fc.bits_per_sample)  
 量子化ビット数です.
 
-#### DATAチャンク
+### DATAチャンク
 * Subchunk2ID (data.dc.chunk_id)  
 "data"の4文字が入ります.
 
