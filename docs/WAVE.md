@@ -52,3 +52,7 @@ Subchunk2IDとSubchunk2Sizeを除いたDATAチャンクのサイズです.
 
 * Data  
 音声データが格納されています.
+
+### 参考サイト
+* Microsoft WAVE soundfile format - http://soundfile.sapp.org/doc/WaveFormat/
+* WAVE ファイルフォーマット - http://www.web-sky.org/program/other/wave.php#format
