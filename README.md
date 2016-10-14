@@ -2,10 +2,10 @@
 
 16bit, モノラルの音声信号を扱うC言語のコードです.
 このコードでは
-* sin_curve(サイン波)
-* square_curve(矩形波)
-* triangle_curve(三角波)
-* sawtooth_curve(のこぎり波)
+* sin_wave(サイン波)
+* square_wave(矩形波)
+* triangle_wave(三角波)
+* sawtooth_wave(のこぎり波)
 
 の関数を呼び出すことで,その波形を作り出すことができます.
 
@@ -15,10 +15,10 @@
 関数の仕様は以下の通りです。
 
 ```c
-void sin_curve(PCM *pcm, double gain, double f0);
-void square_curve(PCM *pcm, double gain, double f0);
-void triangle_curve(PCM *pcm, double gain, double f0);
-void sawtooth_curve(PCM *pcm, double gain, double f0);
+void sin_wave(PCM *pcm, double gain, double f0);
+void square_wave(PCM *pcm, double gain, double f0);
+void triangle_wave(PCM *pcm, double gain, double f0);
+void sawtooth_wave(PCM *pcm, double gain, double f0);
 ```
 
 * pcmにはサンプリング周波数等を格納したPCM型のファイル
@@ -44,7 +44,7 @@ typedef struct {
 #include <stdio.h>
 #include <stdlib.h>
 #include "header/fileIO.h" // PCM型の定義
-#include "header/waves.h"  // sin_curve関数
+#include "header/waves.h"  // sin_wave関数
 
 int main(){
   PCM pcm;
@@ -62,8 +62,8 @@ int main(){
   pcm.s = (double *)calloc(pcm.len, sizeof(double));
 
   // 500Hzと1000Hzのサイン波を合成
-  sin_curve(&pcm, 0.1, 500.0);
-  sin_curve(&pcm, 0.1, 1000.0);
+  sin_wave(&pcm, 0.1, 500.0);
+  sin_wave(&pcm, 0.1, 1000.0);
 
   // 書き出し
   write_wave_mono(&pcm, "sin.wav");

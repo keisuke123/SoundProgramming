@@ -23,8 +23,8 @@ int main(){
   pcm.s = (double *)calloc(pcm.len, sizeof(double));
 
   // 500Hzと1000Hzのサイン波を合成
-  sin_curve(&pcm, 0.1, 500.0);
-  sin_curve(&pcm, 0.1, 1000.0);
+  sin_wave(&pcm, 0.1, 500.0);
+  sin_wave(&pcm, 0.1, 1000.0);
 
   // 書き出し
   write_wave_mono(&pcm, "sin.wav");

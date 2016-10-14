@@ -9,12 +9,12 @@
 
 
 /***************************************
- * サイン波を生成(sin_curve)
+ * サイン波を生成(sin_wave)
  * pcm  : 音源ファイル
  * gain : 利得
  * f0   : 基本周波数
 ***************************************/
-void sin_curve(PCM *pcm, double gain, double f0){
+void sin_wave(PCM *pcm, double gain, double f0){
   int n;
 
   for (n = 0; n < pcm->len; ++n) {
@@ -25,12 +25,12 @@ void sin_curve(PCM *pcm, double gain, double f0){
 }
 
 /***************************************
- * 矩形波を生成(square_curve)
+ * 矩形波を生成(square_wave)
  * pcm  : 音源ファイル
  * gain : 利得
  * f0   : 基本周波数
 ***************************************/
-void square_curve(PCM *pcm, double gain, double f0) {
+void square_wave(PCM *pcm, double gain, double f0) {
   int i, n;
   
   for(i = 1; i <= 44 ; i+=2){
@@ -41,12 +41,12 @@ void square_curve(PCM *pcm, double gain, double f0) {
 }
 
 /***************************************
- * 三角波を生成(triangle_curve)
+ * 三角波を生成(triangle_wave)
  * pcm  : 音源ファイル
  * gain : 利得
  * f0   : 基本周波数
 ***************************************/
-void triangle_curve(PCM *pcm, double gain, double f0) {
+void triangle_wave(PCM *pcm, double gain, double f0) {
   int i, n;
 
   for(i = 1; i <= 44 ; i+=2){
@@ -57,12 +57,12 @@ void triangle_curve(PCM *pcm, double gain, double f0) {
 }
 
 /***************************************
- * のこぎり波を生成(sawtooth_curve)
+ * のこぎり波を生成(sawtooth_wave)
  * pcm  : 音源ファイル
  * gain : 利得
  * f0   : 基本周波数
 ***************************************/
-void sawtooth_curve(PCM *pcm, double gain, double f0) {
+void sawtooth_wave(PCM *pcm, double gain, double f0) {
   int i, n;
   
   for (i = 1; i <= 44; ++i) {

@@ -7,9 +7,9 @@
 
 #include "fileIO.h"
 
-void sin_curve(PCM *pcm, double gain, double f0);
-void square_curve(PCM *pcm, double gain, double f0);
-void triangle_curve(PCM *pcm, double gain, double f0);
-void sawtooth_curve(PCM *pcm, double gain, double f0);
+void sin_wave(PCM *pcm, double gain, double f0);
+void square_wave(PCM *pcm, double gain, double f0);
+void triangle_wave(PCM *pcm, double gain, double f0);
+void sawtooth_wave(PCM *pcm, double gain, double f0);
 
 #endif
