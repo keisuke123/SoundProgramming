@@ -7,13 +7,13 @@ all: $(OBJS)
 compose_sin_curve.o: compose_sin_curve.c
 	gcc -c compose_sin_curve.c
 
-waves.o: header/waves.c
-	gcc $(CFLAGS) -c header/waves.c
+waves.o: ../../header/waves.c
+	gcc $(CFLAGS) -c ../../header/waves.c
 
-fileIO.o: header/fileIO.c
-	gcc $(CGLAGS) -c header/fileIO.c
+fileIO.o: ../../header/fileIO.c
+	gcc $(CGLAGS) -c ../../header/fileIO.c
 
 .PHONY: clean
 
 clean: 
-	rm -f ./a.out $(OBJS)
+	rm -f $(OBJS)

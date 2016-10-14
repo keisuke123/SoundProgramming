@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "header/fileIO.h"
-#include "header/waves.h"
+#include "../../header/fileIO.h"
+#include "../../header/waves.h"
 
 int main(){
   PCM pcm;
