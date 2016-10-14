@@ -1,7 +1,7 @@
 # waveファイルの仕様
 waveファイルは以下のような仕様になっています.
 ![Markdown](./RIFF WAVE file format.jpg "Markdown")
-(画像はhttps://goo.gl/72sPnrより)  
+(画像は https://goo.gl/72sPnr より)  
 WAVEファイルは3つのチャンクから構成されています.
 ()内に書かれているのは、実際の構造体メンバ名です. 
 
