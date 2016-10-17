@@ -1,10 +1,13 @@
 #include "fileIO.h"
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 // WAVEのフォーマットについては以下のURL参照
 // https://goo.gl/72sPnr
 
+#define PATHSIZE 100
 /***************************************************
  * waveファイル(モノラル, 16bit)の読み込み
  * pcm       : データ格納先のPCM構造体
@@ -14,6 +17,7 @@ void read_wave_mono(PCM *pcm, char *file_name){
   FILE *fp;
   WAVE data;
   short d;
+  char path[100];
 
   // バイナリモードで開く
   fp = fopen(file_name, "rb");
@@ -58,6 +62,20 @@ void read_wave_mono(PCM *pcm, char *file_name){
   }
 
   fclose(fp);
+
+  // パスの作成
+  getcwd(path, PATHSIZE);
+  strcat(path, "/");
+  strcat(path, file_name);
+
+  // 読み込んだデータの詳細(pathは読み込んだファイルのパス)
+  puts("************* File Info *************");
+  printf("filename         : %s\n", file_name);
+  printf("sampling rate    : %d[Hz]\n", pcm->fs);
+  printf("Quantization bit : %d[bit]\n", pcm->bit);
+  printf("data length      : %f[sec]\n", (double)pcm->len / pcm->fs);
+  printf("path             : %s\n", path);
+  puts("");
 }
 
 /***************************************************
@@ -69,6 +87,7 @@ void write_wave_mono(PCM *pcm, char *file_name){
   FILE *fp;
   WAVE data;
   short d;
+  char path[100];
 
   /****************** データを構造体に格納 ******************/
   /* Riff Chunk */
@@ -143,6 +162,20 @@ void write_wave_mono(PCM *pcm, char *file_name){
   }
 
   fclose(fp);
+
+  // パスの生成
+  getcwd(path, PATHSIZE);
+  strcat(path, "/");
+  strcat(path, file_name);
+
+  // 作成したデータの詳細
+  puts("************* File Info *************");
+  printf("filename         : %s\n", file_name);
+  printf("sampling rate    : %d[Hz]\n", pcm->fs);
+  printf("Quantization bit : %d[bit]\n", pcm->bit);
+  printf("data length      : %f[sec]\n", (double)pcm->len / pcm->fs);
+  printf("file created at %s\n", path);
+  puts("");
 }
 
 
