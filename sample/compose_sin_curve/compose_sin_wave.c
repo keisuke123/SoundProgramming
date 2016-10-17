@@ -22,9 +22,10 @@ int main(){
   // 音声データ領域をcallocで確保
   pcm.s = (double *)calloc(pcm.len, sizeof(double));
 
-  // 500Hzと1000Hzのサイン波を合成
-  sin_wave(&pcm, 0.1, 500.0);
-  sin_wave(&pcm, 0.1, 1000.0);
+  // 3つのサイン波を合成(C:261.63 D:329.63 E:392.00)
+  sin_wave(&pcm, 0.1, 261.63);
+  sin_wave(&pcm, 0.1, 329.63);
+  sin_wave(&pcm, 0.1, 392.00);
 
   // 書き出し
   write_wave_mono(&pcm, "sin.wav");
