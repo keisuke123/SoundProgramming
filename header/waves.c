@@ -18,9 +18,8 @@
 ***************************************/
 void sin_wave(PCM *pcm, double gain, double f0, int offset, int length){
   int n;
-  //printf("offset : %d\n", offset);
+
   for (n = 0; n < length; ++n) {
-    //printf("n+offset : %d\n", offset + n);
     pcm->s[n+offset] += gain * sin(2 * M_PI * f0 * n / pcm->fs);
   }
 
@@ -39,8 +38,8 @@ void square_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   int i, n;
   
   for(i = 1; i <= 44 ; i+=2){
-    for (n = 0; n < pcm->len ; ++n) {
-      pcm->s[n] += gain * 1.0 / i * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
+    for (n = 0; n < length ; ++n) {
+      pcm->s[n+offset] += gain * 1.0 / i * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
     }
   }
 }
@@ -57,8 +56,8 @@ void triangle_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   int i, n;
 
   for(i = 1; i <= 44 ; i+=2){
-    for (n = 0; n < pcm->len ; ++n) {
-      pcm->s[n] += gain * 1.0 / i / i * sin(i * M_PI / 2 ) * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
+    for (n = 0; n < length ; ++n) {
+      pcm->s[n+offset] += gain * 1.0 / i / i * sin(i * M_PI / 2 ) * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
     }
   }
 }
@@ -75,8 +74,8 @@ void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   int i, n;
   
   for (i = 1; i <= 44; ++i) {
-    for(n = 0 ; n < pcm->len ; n++){
-      pcm->s[n] += gain * 1.0 / i * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
+    for(n = 0 ; n < length ; n++){
+      pcm->s[n+offset] += gain * 1.0 / i * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
     }
   }
 }
