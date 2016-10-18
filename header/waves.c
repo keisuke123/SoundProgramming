@@ -10,15 +10,18 @@
 
 /***************************************
  * サイン波を生成(sin_wave)
- * pcm  : 音源ファイル
- * gain : 利得
- * f0   : 基本周波数
+ * pcm    : 音源ファイル
+ * gain   : 利得
+ * f0     : 基本周波数
+ * offset : 音源開始位置
+ * length : 音源の長さ
 ***************************************/
-void sin_wave(PCM *pcm, double gain, double f0){
+void sin_wave(PCM *pcm, double gain, double f0, int offset, int length){
   int n;
-
-  for (n = 0; n < pcm->len; ++n) {
-    pcm->s[n] += gain * sin(2 * M_PI * f0 * n / pcm->fs);
+  //printf("offset : %d\n", offset);
+  for (n = 0; n < length; ++n) {
+    //printf("n+offset : %d\n", offset + n);
+    pcm->s[n+offset] += gain * sin(2 * M_PI * f0 * n / pcm->fs);
   }
 
   return;
@@ -26,11 +29,13 @@ void sin_wave(PCM *pcm, double gain, double f0){
 
 /***************************************
  * 矩形波を生成(square_wave)
- * pcm  : 音源ファイル
- * gain : 利得
- * f0   : 基本周波数
+ * pcm    : 音源ファイル
+ * gain   : 利得
+ * f0     : 基本周波数
+ * offset : 音源開始位置
+ * length : 音源の長さ
 ***************************************/
-void square_wave(PCM *pcm, double gain, double f0) {
+void square_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   int i, n;
   
   for(i = 1; i <= 44 ; i+=2){
@@ -42,11 +47,13 @@ void square_wave(PCM *pcm, double gain, double f0) {
 
 /***************************************
  * 三角波を生成(triangle_wave)
- * pcm  : 音源ファイル
- * gain : 利得
- * f0   : 基本周波数
+ * pcm    : 音源ファイル
+ * gain   : 利得
+ * f0     : 基本周波数
+ * offset : 音源開始位置
+ * length : 音源の長さ
 ***************************************/
-void triangle_wave(PCM *pcm, double gain, double f0) {
+void triangle_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   int i, n;
 
   for(i = 1; i <= 44 ; i+=2){
@@ -58,11 +65,13 @@ void triangle_wave(PCM *pcm, double gain, double f0) {
 
 /***************************************
  * のこぎり波を生成(sawtooth_wave)
- * pcm  : 音源ファイル
- * gain : 利得
- * f0   : 基本周波数
+ * pcm    : 音源ファイル
+ * gain   : 利得
+ * f0     : 基本周波数
+ * offset : 音源開始位置
+ * length : 音源の長さ
 ***************************************/
-void sawtooth_wave(PCM *pcm, double gain, double f0) {
+void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   int i, n;
   
   for (i = 1; i <= 44; ++i) {
