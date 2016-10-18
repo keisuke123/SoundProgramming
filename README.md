@@ -15,15 +15,17 @@
 関数の仕様は以下の通りです。
 
 ```c
-void sin_wave(PCM *pcm, double gain, double f0);
-void square_wave(PCM *pcm, double gain, double f0);
-void triangle_wave(PCM *pcm, double gain, double f0);
-void sawtooth_wave(PCM *pcm, double gain, double f0);
+void sin_wave(PCM *pcm, double gain, double f0, int offset, int length);
+void square_wave(PCM *pcm, double gain, double f0, int offset, int length);
+void triangle_wave(PCM *pcm, double gain, double f0, int offset, int length);
+void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length);
 ```
 
 * pcmにはサンプリング周波数等を格納したPCM型のファイル
 * gainは振幅調整
 * f0には基本周波数
+* offsetはその波形の開始位置
+* lengthはその波形を生成する時間
 
 を渡してください.
 PCM型のパラメータは以下のとおりです.
@@ -62,8 +64,9 @@ int main(){
   pcm.s = (double *)calloc(pcm.len, sizeof(double));
 
   // 500Hzと1000Hzのサイン波を合成
-  sin_wave(&pcm, 0.1, 500.0);
-  sin_wave(&pcm, 0.1, 1000.0);
+  sin_wave(&pcm, 0.1, C4, 0, pcm.fs);
+  sin_wave(&pcm, 0.1, D4, 0, pcm.fs);
+  sin_wave(&pcm, 0.1, E4, 0, pcm.fs);
 
   // 書き出し
   write_wave_mono(&pcm, "sin.wav");
