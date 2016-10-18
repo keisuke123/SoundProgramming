@@ -17,15 +17,17 @@ int main(){
   pcm.fs = 44100;
 
   // 長さ
-  pcm.len = pcm.fs * 1;
+  pcm.len = pcm.fs * 3;
+
+  printf("len : %d\n", pcm.len);
 
   // 音声データ領域をcallocで確保
   pcm.s = (double *)calloc(pcm.len, sizeof(double));
 
   // 3つのサイン波を合成(C:261.63 D:329.63 E:392.00)
-  sin_wave(&pcm, 0.1, 261.63);
-  sin_wave(&pcm, 0.1, 329.63);
-  sin_wave(&pcm, 0.1, 392.00);
+  sin_wave(&pcm, 0.1, C4, 0, pcm.fs);
+  sin_wave(&pcm, 0.1, D4, 0, pcm.fs);
+  sin_wave(&pcm, 0.1, E4, 0, pcm.fs);
 
   // 書き出し
   write_wave_mono(&pcm, "sin.wav");
