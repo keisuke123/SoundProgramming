@@ -22,7 +22,10 @@ int main(){
   printf("len : %d\n", pcm.len);
 
   // 音声データ領域をcallocで確保
-  pcm.s = (double *)calloc(pcm.len, sizeof(double));
+  if((pcm->s = (double *)calloc(pcm->len, sizeof(double))) == NULL){
+    fprintf(stderr, "Error : ");
+    perror(NULL);
+  }
 
   // 12平均律（ドから一オクターブ上のドまで）
   sin_wave(&pcm, 0.1, C4, 0, pcm.fs);
@@ -35,7 +38,7 @@ int main(){
   sin_wave(&pcm, 0.1, C4*2, pcm.fs * 7, pcm.fs);
 
   // 書き出し
-  write_wave_mono(&pcm, "sin.wav");
+  write_wave_mono(&pcm, "12ET.wav");
 
   // 領域の開放
   free(pcm.s);

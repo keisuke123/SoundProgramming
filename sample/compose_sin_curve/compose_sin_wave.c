@@ -22,7 +22,10 @@ int main(){
   printf("len : %d\n", pcm.len);
 
   // 音声データ領域をcallocで確保
-  pcm.s = (double *)calloc(pcm.len, sizeof(double));
+  if((pcm->s = (double *)calloc(pcm->len, sizeof(double))) == NULL){
+    fprintf(stderr, "Error : ");
+    perror(NULL);
+  }
 
   // 3つのサイン波を合成(C:261.63 D:329.63 E:392.00)
   sin_wave(&pcm, 0.1, C4, 0, pcm.fs);
