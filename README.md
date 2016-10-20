@@ -6,6 +6,7 @@
 * square_wave(矩形波)
 * triangle_wave(三角波)
 * sawtooth_wave(のこぎり波)
+* white_noise(白色雑音)
 
 の関数を呼び出すことで,その波形を作り出すことができます.
 
@@ -19,6 +20,7 @@ void sin_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void square_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void triangle_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length);
+void white_noise(PCM *pcm, double gain, int offset, int length);
 ```
 
 * pcmにはサンプリング周波数等を格納したPCM型のファイル
@@ -27,7 +29,7 @@ void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length);
 * offsetはその波形の開始位置
 * lengthはその波形を生成する時間
 
-を渡してください.
+を渡してください.white_noiseのみf0が不要です.  
 PCM型のパラメータは以下のとおりです.
 
 ```c
@@ -45,8 +47,8 @@ typedef struct {
 ```c
 #include <stdio.h>
 #include <stdlib.h>
-#include "header/fileIO.h" // PCM型の定義
-#include "header/waves.h"  // sin_wave関数
+#include "../../header/fileIO.h"
+#include "../../header/waves.h"
 
 int main(){
   PCM pcm;
@@ -58,12 +60,17 @@ int main(){
   pcm.fs = 44100;
 
   // 長さ
-  pcm.len = pcm.fs * 1;
+  pcm.len = pcm.fs * 3;
+
+  printf("len : %d\n", pcm.len);
 
   // 音声データ領域をcallocで確保
-  pcm.s = (double *)calloc(pcm.len, sizeof(double));
+  if((pcm->s = (double *)calloc(pcm->len, sizeof(double))) == NULL){
+    fprintf(stderr, "Error : ");
+    perror(NULL);
+  }
 
-  // 500Hzと1000Hzのサイン波を合成
+  // 3つのサイン波を合成(C:261.63 D:329.63 E:392.00)
   sin_wave(&pcm, 0.1, C4, 0, pcm.fs);
   sin_wave(&pcm, 0.1, D4, 0, pcm.fs);
   sin_wave(&pcm, 0.1, E4, 0, pcm.fs);
