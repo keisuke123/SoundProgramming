@@ -4,6 +4,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
 #include "fileIO.h"
 #include "waves.h"
 
@@ -78,4 +80,28 @@ void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length) {
       pcm->s[n+offset] += gain * 1.0 / i * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
     }
   }
+}
+
+/***************************************
+ * 白色雑音を生成(white_noise)
+ * pcm    : 音源ファイル
+ * gain   : 利得
+ * offset : 音源開始位置
+ * length : 音源の長さ
+***************************************/
+void white_noise(PCM *pcm, double gain, int offset, int length){
+  int n, i;
+
+  srand((unsigned)time(NULL));
+
+  double phi;
+
+  for(i = 1 ; i <= pcm->fs/2 ; i++){
+    phi = (double)rand() / RAND_MAX * 2.0 * M_PI;
+    for(n = 0 ; n <= length; n++){
+      pcm->s[n + offset] += gain * sin(2 * M_PI * i * n / pcm->fs + phi);
+    }
+  }
+
+  return;
 }
