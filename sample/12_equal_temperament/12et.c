@@ -22,7 +22,7 @@ int main(){
   printf("len : %d\n", pcm.len);
 
   // 音声データ領域をcallocで確保
-  if((pcm->s = (double *)calloc(pcm->len, sizeof(double))) == NULL){
+  if((pcm.s = (double *)calloc(pcm.len, sizeof(double))) == NULL){
     fprintf(stderr, "Error : ");
     perror(NULL);
   }
