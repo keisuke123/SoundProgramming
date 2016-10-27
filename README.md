@@ -7,7 +7,7 @@
 * triangle_wave(三角波)
 * sawtooth_wave(のこぎり波)
 * white_noise(白色雑音)
-
+* DFT(離散フーリエ変換)  
 の関数を呼び出すことで,その波形を作り出すことができます.
 
 ### 関数の仕様
@@ -21,6 +21,7 @@ void square_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void triangle_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void white_noise(PCM *pcm, double gain, int offset, int length);
+double *DFT(PCM *pcm, int N);
 ```
 
 * pcmにはサンプリング周波数等を格納したPCM型のファイル
@@ -85,7 +86,18 @@ int main(){
 }
 ```
 関数を呼ぶと、領域sに書かれているデータとその関数によって生成される波形が合成されれます.  
-サンプルファイルはsampleディレクトリに格納されています.上記のファイルはsample/compose_sin_curveです.
+サンプルファイルはsampleディレクトリに格納されています.上記のファイルはsample/compose_sin_curveです.その他にも
+* 12_equal_temperament  
+12平均律を再現したプログラム.  
+* compose_sin_curve  
+サイン波を合成するプログラム.
+* DFT
+離散フーリエ変換によって, 周波数特性を観察する.(FFTではないのでものすごく遅い)
+* read_wave_file  
+wavファイルを読み込むプログラム.
+* white_noise  
+white_noise関数を用いたホワイトノイズ発生プログラム.  
+があります.ª
 
 ### その他
 WAVEの仕様については、[こちら](./docs/WAVE.md)を参照して下さい.  
