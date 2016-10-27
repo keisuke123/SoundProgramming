@@ -9,6 +9,8 @@
 #include "../../header/fileIO.h"
 #include "../../header/waves.h"
 
+#define SEC 1
+
 int main(){
   PCM pcm;
   int i, n;
@@ -21,7 +23,7 @@ int main(){
   pcm.fs = 44100;
 
   // 長さ
-  pcm.len = pcm.fs * 2;
+  pcm.len = pcm.fs * SEC;
 
   printf("len : %d\n", pcm.len);
 
