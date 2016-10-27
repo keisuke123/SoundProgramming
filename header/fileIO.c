@@ -152,7 +152,6 @@ void write_wave_mono(PCM *pcm, char *file_name){
   /****************** 音源の書き出し ******************/
   int i;
   for(i = 0 ; i < pcm->len ; i++){
-    printf("pcm->s[%d] : %f\n", i, pcm->s[i]);
     double s = (pcm->s[i] + 1.0) * 32768.0;
 
     // クリッピング
