@@ -41,8 +41,12 @@ void square_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   
   for(i = 1; i <= 44 ; i+=2){
     for (n = 0; n < length ; ++n) {
-      pcm->s[n+offset] += gain * 1.0 / i * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
+      pcm->s[n + offset] += gain * 1.0 / i * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
     }
+  }
+
+  for(n = 0 ; n < pcm->len ; n++){
+    pcm->s[n] *= 4.0 / M_PI;
   }
 }
 
@@ -102,6 +106,38 @@ void white_noise(PCM *pcm, double gain, int offset, int length){
       pcm->s[n + offset] += gain * sin(2 * M_PI * i * n / pcm->fs + phi);
     }
   }
-
   return;
+}
+
+/***************************************
+ * 離散フーリエ変換(DFT)
+ * pcm    : 音源ファイル
+ * N      : 長さ
+ * O(n^2)なので遅い
+***************************************/
+double *DFT(PCM *pcm, int N){
+  double *Xr, *Xi, *result;
+  int k, n;
+
+  Xr = (double *)calloc(N, sizeof(double));
+  Xi = (double *)calloc(N, sizeof(double));
+  result = (double *)calloc(N, sizeof(double));
+
+  puts("------------- DFT start -------------");
+  for(k = 0 ; k < N ; k++){
+    for(n = 0 ; n < N ; n++){
+      Xr[k] += pcm->s[n] *  cos(2 * M_PI * k * n / N);
+      Xi[k] += pcm->s[n] * -sin(2 * M_PI * k * n / N);
+    }
+  }
+
+  puts("B");
+  for(k = 0 ; k < N ; k++){
+    result[k] = sqrt(pow(Xr[k], 2) + pow(Xi[k], 2));
+  }
+  puts("C");
+  free(Xr);
+  free(Xi);
+
+  return result;
 }

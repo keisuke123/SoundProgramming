@@ -12,6 +12,7 @@ void square_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void triangle_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void white_noise(PCM *pcm, double gain, int offset, int length);
+double *DFT(PCM *pcm, int N);
 
 // 12平均律音階
 #define C4  261.63
