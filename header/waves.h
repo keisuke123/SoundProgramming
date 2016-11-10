@@ -8,7 +8,7 @@
 #include "fileIO.h"
 
 void sin_wave(PCM *pcm, double gain, double f0, int offset, int length);
-void sin_wave(PCM *pcm, double gain, double f0, int offset, int length);
+void cos_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void square_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void triangle_wave(PCM *pcm, double gain, double f0, int offset, int length);
 void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length);
