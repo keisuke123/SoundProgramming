@@ -12,33 +12,20 @@
 int main(){
   PCM pcm;
 
-  // 量子化ビット数
-  pcm.bit = 16;
+  // pcmを量子化ビット数16[bit], サンプリング周波数fs=44100[Hz], 長さ1[sec]で初期化
+  init_PCM(&pcm, 16, 44100, SEC);
 
-  // サンプリング周波数
-  pcm.fs = 44100;
-
-  // 長さ
-  pcm.len = pcm.fs * SEC;
-
-  printf("len : %d\n", pcm.len);
-
-  // 音声データ領域をcallocで確保
-  if((pcm.s = (double *)calloc(pcm.len, sizeof(double))) == NULL){
-    fprintf(stderr, "Error : ");
-    perror(NULL);
-  }
-
-  // 3つのサイン波を合成(C4:261.63 D4:293.66 E4:329.63)
+  // 3つのサイン波を合成(C4:261.63 E4:329.63 G4:392.0)
   sin_wave(&pcm, 0.1, C4, 0, pcm.fs);
-  sin_wave(&pcm, 0.1, D4, 0, pcm.fs);
   sin_wave(&pcm, 0.1, E4, 0, pcm.fs);
+  sin_wave(&pcm, 0.1, G4, 0, pcm.fs);
 
   // 書き出し
-  write_wave_mono(&pcm, "compose_sin.wav");
+  write_wave_mono(pcm, "compose_sin.wav");
 
   // 領域の開放
   free(pcm.s);
 
   return 0;
 }
+
