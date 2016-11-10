@@ -42,20 +42,8 @@ void read_wave_mono(PCM *pcm, char *file_name){
   fread(data.dc.chunk_id, 1, 4, fp);
   fread(&data.dc.chunk_size, 4, 1, fp);
 
-  // サンプリング周波数
-  pcm->fs = data.fc.sample_per_sec;
-
-  // 量子化ビット数
-  pcm->bit = data.fc.bits_per_sample;
-
-  // データの長さ
-  pcm->len = data.dc.chunk_size / 2;
-
-  // データ格納用のメモリを確保
-  if((pcm->s = (double *)calloc(pcm->len, sizeof(double))) == NULL){
-    fprintf(stderr, "Error : ");
-    perror(NULL);
-  }
+  // init_PCMでPCM構造体を初期化する
+  init_PCM(pcm, data.fc.sample_per_sec, data.fc.bits_per_sample, data.dc.chunk_size/2);
 
   // 32768.0で正規化
   int i;
@@ -181,11 +169,25 @@ void write_wave_mono(PCM pcm, char *file_name){
   puts("");
 }
 
+/***************************************************
+ * PCM構造体の初期化
+ * pcm : データ格納先のPCM構造体
+ * bit : 量子化ビット数[bit]
+ * fs  : サンプリング周波数[Hz]
+ * len : 長さ[sec]
+****************************************************/
 void init_PCM(PCM *pcm, int bit, int fs, int len){
+
+  // 量子化ビット数
   pcm->bit = bit;
+
+  // サンプリング周波数
   pcm->fs = fs;
+
+  // 長さ
   pcm->len = fs * len;
 
+  // callocでメモリを確保
   if((pcm->s = (double *)calloc(pcm->len, sizeof(double))) == NULL){
     fprintf(stderr, "Error : ");
     perror(NULL);
