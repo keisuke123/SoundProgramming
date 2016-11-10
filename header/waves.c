@@ -29,6 +29,24 @@ void sin_wave(PCM *pcm, double gain, double f0, int offset, int length){
 }
 
 /***************************************
+ * コサイン波を生成(cos_wave)
+ * pcm    : 音源ファイル
+ * gain   : 利得
+ * f0     : 基本周波数
+ * offset : 音源開始位置
+ * length : 音源の長さ
+***************************************/
+void cos_wave(PCM *pcm, double gain, double f0, int offset, int length){
+  int n;
+
+  for (n = 0; n < length; ++n) {
+    pcm->s[n+offset] += gain * cos(2 * M_PI * f0 * n / pcm->fs);
+  }
+
+  return;
+}
+
+/***************************************
  * 矩形波を生成(square_wave)
  * pcm    : 音源ファイル
  * gain   : 利得
