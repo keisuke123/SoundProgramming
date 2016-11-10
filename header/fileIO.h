@@ -41,8 +41,9 @@ typedef struct {
   DATA_CHUNK dc;
 }WAVE;
 
-void write_wave_mono(PCM *pcm, char *file_name);
 void read_wave_mono(PCM *pcm, char *file_name);
+void write_wave_mono(PCM pcm, char *file_name);
+void init_PCM(PCM *pcm, int bit, int fs, int len);
 
 #endif
 

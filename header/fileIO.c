@@ -86,7 +86,7 @@ void read_wave_mono(PCM *pcm, char *file_name){
  * pcm       : データ格納先のPCM構造体
  * file_name : 読み込むファイルの名前
 ****************************************************/
-void write_wave_mono(PCM *pcm, char *file_name){
+void write_wave_mono(PCM pcm, char *file_name){
   FILE *fp;
   WAVE data;
   short d;
@@ -98,7 +98,7 @@ void write_wave_mono(PCM *pcm, char *file_name){
   data.rc.chunk_id[1] = 'I';
   data.rc.chunk_id[2] = 'F';
   data.rc.chunk_id[3] = 'F';
-  data.rc.chunk_size = 36 + pcm->len * 2;
+  data.rc.chunk_size = 36 + pcm.len * 2;
   data.rc.format_type[0] = 'W';
   data.rc.format_type[1] = 'A';
   data.rc.format_type[2] = 'V';
@@ -112,10 +112,10 @@ void write_wave_mono(PCM *pcm, char *file_name){
   data.fc.chunk_size = 16;   //idとchunkを除いたサイズ
   data.fc.format_type = 1;
   data.fc.channel = 1;
-  data.fc.sample_per_sec = pcm->fs;
-  data.fc.bits_per_sample = pcm->bit;
+  data.fc.sample_per_sec = pcm.fs;
+  data.fc.bits_per_sample = pcm.bit;
   data.fc.block_size = data.fc.bits_per_sample * data.fc.channel / 8;
-  data.fc.bytes_per_sec = pcm->fs * data.fc.block_size;
+  data.fc.bytes_per_sec = pcm.fs * data.fc.block_size;
   
 
   /* Data Chunk**/
@@ -123,7 +123,7 @@ void write_wave_mono(PCM *pcm, char *file_name){
   data.dc.chunk_id[1] = 'a';
   data.dc.chunk_id[2] = 't';
   data.dc.chunk_id[3] = 'a';
-  data.dc.chunk_size = pcm->len * data.fc.channel * 2;
+  data.dc.chunk_size = pcm.len * data.fc.channel * 2;
 
   // バイナリモードで書き出す
   fp = fopen(file_name, "wb");
@@ -151,8 +151,8 @@ void write_wave_mono(PCM *pcm, char *file_name){
   
   /****************** 音源の書き出し ******************/
   int i;
-  for(i = 0 ; i < pcm->len ; i++){
-    double s = (pcm->s[i] + 1.0) * 32768.0;
+  for(i = 0 ; i < pcm.len ; i++){
+    double s = (pcm.s[i] + 1.0) * 32768.0;
 
     // クリッピング
     if (s > 65535.0){
@@ -174,11 +174,21 @@ void write_wave_mono(PCM *pcm, char *file_name){
   // 作成したデータの詳細
   puts("************* File Info *************");
   printf("filename         : %s\n", file_name);
-  printf("sampling rate    : %d[Hz]\n", pcm->fs);
-  printf("Quantization bit : %d[bit]\n", pcm->bit);
-  printf("data length      : %f[sec]\n", (double)pcm->len / pcm->fs);
+  printf("sampling rate    : %d[Hz]\n", pcm.fs);
+  printf("Quantization bit : %d[bit]\n", pcm.bit);
+  printf("data length      : %f[sec]\n", (double)pcm.len / pcm.fs);
   printf("file created at %s\n", path);
   puts("");
 }
 
+void init_PCM(PCM *pcm, int bit, int fs, int len){
+  pcm->bit = bit;
+  pcm->fs = fs;
+  pcm->len = fs * len;
 
+  if((pcm->s = (double *)calloc(pcm->len, sizeof(double))) == NULL){
+    fprintf(stderr, "Error : ");
+    perror(NULL);
+  }
+
+}
