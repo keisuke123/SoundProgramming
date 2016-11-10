@@ -21,7 +21,7 @@
 void sin_wave(PCM *pcm, double gain, double f0, int offset, int length){
   int n;
 
-  for (n = 0; n < length; ++n) {
+  for (n = 0; n < pcm->fs*length; ++n) {
     pcm->s[n+offset] += gain * sin(2 * M_PI * f0 * n / pcm->fs);
   }
 
@@ -39,7 +39,7 @@ void sin_wave(PCM *pcm, double gain, double f0, int offset, int length){
 void cos_wave(PCM *pcm, double gain, double f0, int offset, int length){
   int n;
 
-  for (n = 0; n < length; ++n) {
+  for (n = 0; n < pcm->fs*length; ++n) {
     pcm->s[n+offset] += gain * cos(2 * M_PI * f0 * n / pcm->fs);
   }
 
@@ -58,12 +58,12 @@ void square_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   int i, n;
   
   for(i = 1; i <= 44 ; i+=2){
-    for (n = 0; n < length ; ++n) {
+    for (n = 0; n < pcm->fs*length ; ++n) {
       pcm->s[n + offset] += gain * 1.0 / i * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
     }
   }
 
-  for(n = 0 ; n < pcm->len ; n++){
+  for(n = 0 ; n < pcm->fs*pcm->len ; n++){
     pcm->s[n] *= 4.0 / M_PI;
   }
 }
@@ -80,7 +80,7 @@ void triangle_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   int i, n;
 
   for(i = 1; i <= 44 ; i+=2){
-    for (n = 0; n < length ; ++n) {
+    for (n = 0; n < pcm->fs*length ; ++n) {
       pcm->s[n+offset] += gain * 1.0 / i / i * sin(i * M_PI / 2 ) * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
     }
   }
@@ -98,7 +98,7 @@ void sawtooth_wave(PCM *pcm, double gain, double f0, int offset, int length) {
   int i, n;
   
   for (i = 1; i <= 44; ++i) {
-    for(n = 0 ; n < length ; n++){
+    for(n = 0 ; n < pcm->fs*length ; n++){
       pcm->s[n+offset] += gain * 1.0 / i * sin(2.0 * M_PI * i * f0 * n / pcm->fs);
     }
   }
@@ -120,7 +120,7 @@ void white_noise(PCM *pcm, double gain, int offset, int length){
 
   for(i = 1 ; i <= pcm->fs/2 ; i++){
     phi = (double)rand() / RAND_MAX * 2.0 * M_PI;
-    for(n = 0 ; n <= length; n++){
+    for(n = 0 ; n <= pcm->fs*length; n++){
       pcm->s[n + offset] += gain * sin(2 * M_PI * i * n / pcm->fs + phi);
     }
   }
@@ -137,8 +137,13 @@ double *DFT(PCM *pcm, int N){
   double *Xr, *Xi, *result;
   int k, n;
 
+  // 実部
   Xr = (double *)calloc(N, sizeof(double));
+
+  // 虚部
   Xi = (double *)calloc(N, sizeof(double));
+
+  // 結果を格納する領域を確保
   result = (double *)calloc(N, sizeof(double));
 
   puts("------------- DFT start -------------");
@@ -149,11 +154,14 @@ double *DFT(PCM *pcm, int N){
     }
   }
 
-  puts("B");
+  // 変換結果
   for(k = 0 ; k < N ; k++){
     result[k] = sqrt(pow(Xr[k], 2) + pow(Xi[k], 2));
   }
-  puts("C");
+
+  puts("------------ finish ------------------");
+
+  // 領域開放
   free(Xr);
   free(Xi);
 
