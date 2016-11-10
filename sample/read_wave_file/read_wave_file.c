@@ -11,7 +11,7 @@ int main(){
   PCM pcm;
   int n;
 
-  read_wave_mono(&pcm, "sine_500hz.wav");
+  read_wave_mono(&pcm, "sin(500Hz).wav");
 
   for (int n = 0; n < pcm.len; ++n) {
     printf("pcm.s[%d]:%f\n", n, pcm.s[n]);
