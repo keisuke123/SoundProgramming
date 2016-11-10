@@ -16,9 +16,9 @@ int main(){
   init_PCM(&pcm, 16, 44100, SEC);
 
   // 3つのサイン波を合成(C4:261.63 E4:329.63 G4:392.0)
-  sin_wave(&pcm, 0.1, C4, 0, pcm.fs);
-  sin_wave(&pcm, 0.1, E4, 0, pcm.fs);
-  sin_wave(&pcm, 0.1, G4, 0, pcm.fs);
+  sin_wave(&pcm, 0.1, C4, 0, 1);
+  sin_wave(&pcm, 0.1, E4, 0, 1);
+  sin_wave(&pcm, 0.1, G4, 0, 1);
 
   // 書き出し
   write_wave_mono(pcm, "compose_sin.wav");

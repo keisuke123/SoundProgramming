@@ -28,14 +28,14 @@ int main(){
   }
 
   // 12平均律（ドから一オクターブ上のドまで）
-  sin_wave(&pcm, 0.1, C4, 0, pcm.fs);
-  sin_wave(&pcm, 0.1, D4, pcm.fs * 1, pcm.fs);
-  sin_wave(&pcm, 0.1, E4, pcm.fs * 2, pcm.fs);
-  sin_wave(&pcm, 0.1, F4, pcm.fs * 3, pcm.fs);
-  sin_wave(&pcm, 0.1, G4, pcm.fs * 4, pcm.fs);
-  sin_wave(&pcm, 0.1, A4, pcm.fs * 5, pcm.fs);
-  sin_wave(&pcm, 0.1, B4, pcm.fs * 6, pcm.fs);
-  sin_wave(&pcm, 0.1, C4*2, pcm.fs * 7, pcm.fs);
+  sin_wave(&pcm, 0.1, C4, 0, 1);
+  sin_wave(&pcm, 0.1, D4, pcm.fs * 1, 1);
+  sin_wave(&pcm, 0.1, E4, pcm.fs * 2, 1);
+  sin_wave(&pcm, 0.1, F4, pcm.fs * 3, 1);
+  sin_wave(&pcm, 0.1, G4, pcm.fs * 4, 1);
+  sin_wave(&pcm, 0.1, A4, pcm.fs * 5, 1);
+  sin_wave(&pcm, 0.1, B4, pcm.fs * 6, 1);
+  sin_wave(&pcm, 0.1, C4*2, pcm.fs * 7, 1);
 
   // 書き出し
   write_wave_mono(&pcm, "12ET.wav");
