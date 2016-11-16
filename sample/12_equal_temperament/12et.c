@@ -4,28 +4,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../header/fileIO.h"
-#include "../../header/waves.h"
+#include <waves.h>
+#include <fileIO.h>
 
 int main(){
   PCM pcm;
 
-  // 量子化ビット数
-  pcm.bit = 16;
-
-  // サンプリング周波数
-  pcm.fs = 44100;
-
-  // 長さ
-  pcm.len = pcm.fs * 8;
-
-  printf("len : %d\n", pcm.len);
-
-  // 音声データ領域をcallocで確保
-  if((pcm.s = (double *)calloc(pcm.len, sizeof(double))) == NULL){
-    fprintf(stderr, "Error : ");
-    perror(NULL);
-  }
+  init_PCM(&pcm, 16, 44100, 8);
 
   // 12平均律（ドから一オクターブ上のドまで）
   sin_wave(&pcm, 0.1, C4, 0, 1);
@@ -38,7 +23,7 @@ int main(){
   sin_wave(&pcm, 0.1, C4*2, pcm.fs * 7, 1);
 
   // 書き出し
-  write_wave_mono(&pcm, "12ET.wav");
+  write_wave_mono(pcm, "12ET.wav");
 
   // 領域の開放
   free(pcm.s);
