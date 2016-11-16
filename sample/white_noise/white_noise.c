@@ -6,26 +6,16 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include "../../header/fileIO.h"
-#include "../../header/waves.h"
+#include <fileIO.h>
+#include <waves.h>
 
 #define SEC 1
 
 int main(){
   PCM pcm;
   int i, n;
-  double ak, omg_k, d_omg;
 
-  // 量子化ビット数
-  pcm.bit = 16;
-
-  // サンプリング周波数
-  pcm.fs = 44100;
-
-  // 長さ
-  pcm.len = pcm.fs * SEC;
-
-  printf("len : %d\n", pcm.len);
+  init_PCM(&pcm, 16, 44100, SEC);
 
   // 音声データ領域をcallocで確保
   if((pcm.s = (double *)calloc(pcm.len, sizeof(double))) == NULL){
@@ -51,7 +41,7 @@ int main(){
   // white_noise(&pcm, 0.001, 0, pcm.len);
 
   // 書き出し
-  write_wave_mono(&pcm, "noise.wav");
+  write_wave_mono(pcm, "noise.wav");
 
   // 領域の開放
   free(pcm.s);
