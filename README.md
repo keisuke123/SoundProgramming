@@ -25,11 +25,16 @@ void white_noise(PCM *pcm, double gain, int offset, int length);
 double *DFT(PCM *pcm, int N);
 ```
 
-* pcmにはサンプリング周波数等を格納したPCM型のファイル
-* gainは振幅調整
-* f0には基本周波数
-* offsetはその波形の開始位置
-* lengthはその波形を生成する時間
+* pcm  
+サンプリング周波数等を格納したPCM型のファイル
+* gain  
+振幅調整(実数)
+* f0  
+基本周波数[Hz]
+* offset  
+波形の開始位置[sec]
+* length  
+波形を生成する時間(整数[sec])
 
 を渡してください.white_noiseのみf0が不要です.  
 PCM型のパラメータは以下のとおりです.
