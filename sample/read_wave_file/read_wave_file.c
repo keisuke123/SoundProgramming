@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../header/fileIO.h"
-#include "../../header/waves.h"
+#include <waves.h>
+#include <fileIO.h>
 
 int main(){
   PCM pcm;
@@ -13,7 +13,7 @@ int main(){
 
   read_wave_mono(&pcm, "sin(500Hz).wav");
 
-  for (int n = 0; n < pcm.len; ++n) {
+  for (n = 0; n < pcm.len; ++n) {
     printf("pcm.s[%d]:%f\n", n, pcm.s[n]);
   }
 
