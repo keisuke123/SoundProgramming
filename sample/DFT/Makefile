@@ -1,11 +1,11 @@
 OBJS = dft.o waves.o fileIO.o
-CFLAGS = -Wall -O2 -lm
+CFLAGS = -Wall -O2 -lm -I ../../header
 
 all: $(OBJS)
 	gcc $^
 
 dft.o: dft.c
-	gcc -c dft.c
+	gcc $(CFLAGS) -c dft.c
 
 waves.o: ../../header/waves.c
 	gcc $(CFLAGS) -c ../../header/waves.c

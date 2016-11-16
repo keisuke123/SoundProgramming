@@ -1,11 +1,11 @@
 OBJS = read_wave_file.o waves.o fileIO.o
-CFLAGS = -Wall -O2 -lm
+CFLAGS = -Wall -O2 -lm -I ../../header
 
 all: $(OBJS)
 	gcc $^
 
 read_wave_file.o: read_wave_file.c
-	gcc -c read_wave_file.c
+	gcc -c $(CFLAGS) read_wave_file.c
 
 waves.o: ../../header/waves.c
 	gcc $(CFLAGS) -c ../../header/waves.c

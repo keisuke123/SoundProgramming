@@ -1,11 +1,11 @@
 OBJS = output_wave.o waves.o fileIO.o
-CFLAGS = -Wall -O2 -lm
+CFLAGS = -Wall -O2 -lm -I ../../header
 
 all: $(OBJS)
 	gcc $^
 
 output_wave.o: output_wave.c
-	gcc -c output_wave.c
+	gcc -c $(CFLAGS) output_wave.c
 
 waves.o: ../../header/waves.c
 	gcc $(CFLAGS) -c ../../header/waves.c

@@ -1,11 +1,11 @@
 OBJS = 12et.o waves.o fileIO.o
-CFLAGS = -Wall -O2 -lm
+CFLAGS = -I ../../header -Wall -O2
 
 all: $(OBJS)
 	gcc $^
 
 12et.o: 12et.c
-	gcc -c 12et.c
+	gcc -c $(CFLAGS) 12et.c
 
 waves.o: ../../header/waves.c
 	gcc $(CFLAGS) -c ../../header/waves.c

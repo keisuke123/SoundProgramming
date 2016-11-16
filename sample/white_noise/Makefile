@@ -1,11 +1,11 @@
 OBJS = white_noise.o waves.o fileIO.o
-CFLAGS = -Wall -O2 -lm
+CFLAGS = -Wall -O2 -lm -I ../../header
 
 all: $(OBJS)
 	gcc $^
 
 white_noise.o: white_noise.c
-	gcc -c white_noise.c
+	gcc -c $(CFLAGS) white_noise.c
 
 waves.o: ../../header/waves.c
 	gcc $(CFLAGS) -c ../../header/waves.c
