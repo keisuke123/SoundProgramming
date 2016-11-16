@@ -49,8 +49,8 @@ typedef struct {
 ```c
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../header/fileIO.h"
-#include "../../header/waves.h"
+#include <fileIO.h>
+#include <waves.h>
 
 #define SEC 1
 
@@ -80,7 +80,7 @@ int main(){
 12平均律を再現したプログラム.  
 * compose_sin_curve  
 サイン波を合成するプログラム.
-* DFT
+* DFT  
 離散フーリエ変換によって, 周波数特性を観察する.(FFTではないのでものすごく遅い)
 * read_wave_file  
 wavファイルを読み込むプログラム.
